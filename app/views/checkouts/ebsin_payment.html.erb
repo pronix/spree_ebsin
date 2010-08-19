@@ -13,15 +13,13 @@
 	<%= hidden_field_tag 'account_id', payment_method.preferred_account_id %>
 	<%= hidden_field_tag 'reference_no', @order.number %>
 	<%= hidden_field_tag 'amount', @order.total.to_s.gsub(".", ",") %>
-        <%= hidden_field_tag 'return_url', [order_url(@order, {:checkout_complete => true, :order_token => @order.token}).gsub("localhost:3000","ip31.net236.n37.ru"),'DR={DR}'].join('&')  %>
-	<%#= hidden_field_tag 'URLNOK', url_for(payment_failure_order_checkout_url(@order, :payment_method_id => payment_method)) %>
+        <%= hidden_field_tag 'return_url', [ebsin_comeback_order_checkout_url(@order,{:payment_method_id => payment_method, :order_token => @order.token}),'DR={DR}'].join('&')  %>
 	<%= hidden_field_tag 'name', [@order.bill_address.firstname,  @order.bill_address.lastname].join(' ') %>
 	<%= hidden_field_tag 'address', @order.bill_address.address1 %>
 	<%= hidden_field_tag 'city', @order.bill_address.city %>
 	<%= hidden_field_tag 'postal_code', @order.bill_address.zipcode %>
 	<%= hidden_field_tag 'country', @order.bill_address.country.iso3 %>
-	<%= hidden_field_tag 'description', 'Spree Order' %>
-	<%#= hidden_field_tag 'PAYMENTSELECTION', 'CreditCard' %>
+        <%= hidden_field_tag 'description', "Spree Order: #{@order.number}" %>
         <%= hidden_field_tag 'email', @order.email || 'email@example.com' %>
 
         <%= hidden_field_tag 'mode',  @gateway.preferred_mode %> 
