@@ -12,7 +12,7 @@
 <p><%= t('ebsin_instuctional_text') %></p>
 	<%= hidden_field_tag 'account_id', payment_method.preferred_account_id %>
 	<%= hidden_field_tag 'reference_no', @order.number %>
-	<%= hidden_field_tag 'amount', @order.total.to_s.gsub(".", ",") %>
+	<%= hidden_field_tag 'amount', @order.total.to_s %>
         <%= hidden_field_tag 'return_url', [ebsin_comeback_order_checkout_url(@order,{:payment_method_id => payment_method, :order_token => @order.token}),'DR={DR}'].join('&')  %>
 	<%= hidden_field_tag 'name', [@order.bill_address.firstname,  @order.bill_address.lastname].join(' ') %>
 	<%= hidden_field_tag 'address', @order.bill_address.address1 %>
