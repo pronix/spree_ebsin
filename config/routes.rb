@@ -1,10 +1,7 @@
-# Put your extension routes here.
-
-# map.namespace :admin do |admin|
-#   admin.resources :whatever
-# end  
-
-map.resources :orders do |order|
-  order.resource :checkout, :member => {:ebsin_payment => :any, :ebsin_comeback => :any}
+Rails.application.routes.draw do
+  # Add your extension routes here
+  namespace :gateway do
+    match '/ebsin/:gateway_id/:order_id' => 'ebsin#show',     :as => :ebsin
+    match '/ebsin/:id/comeback'          => 'ebsin#comeback', :as => :ebsin_comeback
+  end
 end
-

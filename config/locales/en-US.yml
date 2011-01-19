@@ -1,10 +1,12 @@
 ---
 en:
+  payment_success: Payment Success
+  currency_code: Currency
   mode: Work mode
   account_id: Account Id
   secret_key: Secret Key
   ebsin_payment: Pay by credit card
-  ebsin_instructions: "Pay now using EBS (you'll no be redirected to EBS secure server)"
+  ebsin_pay_instructions: "Pay now using EBS (you'll no be redirected to EBS secure server)"
   ebsin_instuctional_text: "Click the payment button below to have your credit card processed by our secure servers. We accept visa, mastercard...."
   url: URL
   redirect_success: Success Redirect URL
@@ -16,4 +18,4 @@ en:
   pay_now: "Pay Now"
   ebsin_payment_failure: "Yikes! Something went wrong. Please try again."
   ebsin_payment_success: "Yes! Your payment has been accepted."
-  
+
