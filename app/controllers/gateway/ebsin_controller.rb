@@ -35,7 +35,7 @@ class Gateway::EbsinController < Spree::BaseController
   # Result from EBS
   #
   def comeback
-    @order   = Order.find(params[:id])
+    @order   = Order.find_by_number(params[:id])
     @gateway = @order && @order.payments.first.payment_method
 
     if @gateway && @gateway.kind_of?(PaymentMethod::Ebsin) && params[:DR] &&
