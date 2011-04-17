@@ -43,7 +43,7 @@ class Gateway::EbsinController < Spree::BaseController
         (@data["ResponseMessage"] == "Transaction Successful")
 
       ebsin_payment_success(@data)
-      @order.checkout.next
+      @order.next
       @order.save
       session[:order_id] = nil
       redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("payment_success")
@@ -74,12 +74,12 @@ class Gateway::EbsinController < Spree::BaseController
                                  :verification_value  => data["TransactionID"],
                                  :number              => data["PaymentID"] })
 
-    payment = @order.checkout.payments.create({ :amount => @order.total, :source => fake_card, :payment_method_id => @gateway.id})
+    payment = @order.payments.create({ :amount => @order.total, :source => fake_card, :payment_method_id => @gateway.id})
 
     # query - need 0 in amount for an auth? see main code
-    transaction = CreditcardTxn.new({ :amount => @order.total,
+    transaction = Creditcard.new({ :amount => @order.total,
                                       :response_code => 'success',
-                                      :txn_type => CreditcardTxn::TxnType::PURCHASE })
+                                      :txn_type => Creditcard::TxnType::PURCHASE })
     payment.txns << transaction
     payment.finalize!
   end
