@@ -68,20 +68,14 @@ class Gateway::EbsinController < Spree::BaseController
   #
   def ebsin_payment_success(data)
     # record the payment
-    fake_card = Creditcard.new({ :cc_type => "visa", :month => Time.now.month, :year => Time.now.year,
-                                 :first_name          => @order.bill_address.firstname,
+    
+    fake_card = Ebsinfo.new({    :first_name          => @order.bill_address.firstname,
                                  :last_name           => @order.bill_address.lastname,
-                                 :verification_value  => data["TransactionID"],
-                                 :number              => data["PaymentID"] })
+                                 :TransactionId       => data["TransactionID"],
+                                 :PaymentId           => data["PaymentIDs"] })
 
     payment = @order.payments.create({ :amount => @order.total, :source => fake_card, :payment_method_id => @gateway.id})
 
-    # query - need 0 in amount for an auth? see main code
-    transaction = Creditcard.new({ :amount => @order.total,
-                                      :response_code => 'success',
-                                      :txn_type => Creditcard::TxnType::PURCHASE })
-    payment.txns << transaction
-    payment.finalize!
   end
 
 end
