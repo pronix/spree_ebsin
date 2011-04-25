@@ -72,7 +72,7 @@ class Gateway::EbsinController < Spree::BaseController
     fake_card = Ebsinfo.new({    :first_name          => @order.bill_address.firstname,
                                  :last_name           => @order.bill_address.lastname,
                                  :TransactionId       => data["TransactionID"],
-                                 :PaymentId           => data["PaymentIDs"] })
+                                 :PaymentId           => data["PaymentID"] })
 
     payment = @order.payments.create({ :amount => @order.total, :source => fake_card, :payment_method_id => @gateway.id})
 
