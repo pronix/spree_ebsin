@@ -74,7 +74,8 @@ class Gateway::EbsinController < Spree::BaseController
                                  :TransactionId       => data["TransactionID"],
                                  :PaymentId           => data["PaymentID"] })
 
-    payment = @order.payments.create({ :amount => @order.total, :source => fake_card, :payment_method_id => @gateway.id})
+    @payment = Payment.find_by_order_id(session[:order_id])
+    @payment.update_attributes({ :source_type => fake_card, :source_id => @gateway.id})
 
   end
 
