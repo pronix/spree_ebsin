@@ -10,7 +10,7 @@
   </fieldset>
 
   <hr />
-  <p><%= t('ebsin_instuctional_text') %></p>
+  <p class="tenpx"><%= t('ebsin_instuctional_text') %></p>
   <%= hidden_field_tag 'account_id',      @gateway.preferred_account_id %>
 	<%= hidden_field_tag 'reference_no',    @order.number %>
 	<%= hidden_field_tag 'amount',          @order.total.to_s %>
