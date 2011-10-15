@@ -16,6 +16,6 @@ en:
   ebsin: Payment
   ebsin_submit: "Pay and place order"
   pay_now: "Pay Now"
-  ebsin_payment_failure: "Yikes! Something went wrong. Please try again."
-  ebsin_payment_success: "Yes! Your payment has been accepted."
+  ebsin_payment_failure: "Something went wrong. Please try again."
+  ebsin_payment_success: "Your payment has been accepted."
 
