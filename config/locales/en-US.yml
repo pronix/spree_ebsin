@@ -7,7 +7,7 @@ en:
   secret_key: Secret Key
   ebsin_payment: Pay by credit card
   ebsin_pay_instructions: "Pay now using EBS (you'll now be redirected to EBS secure server)"
-  ebsin_instuctional_text: "Click the payment button below to have your credit card processed by our secure servers. We accept visa, mastercard...."
+  ebsin_instuctional_text: "Click the payment button below to have your payment processed by our secure servers."
   url: URL
   redirect_success: Success Redirect URL
   redirect_fail: Failure Redirect URL
