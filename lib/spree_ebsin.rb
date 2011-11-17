@@ -11,6 +11,7 @@ module SpreeEbsin
         Rails.env.production? ? require(c) : load(c)
       end
       PaymentMethod::Ebsin.register
+        app.config.spree.payment_methods << PaymentMethod::Ebsin
     end
 
     config.to_prepare &method(:activate).to_proc
