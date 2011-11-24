@@ -1,5 +1,4 @@
-<fieldset id='payment' style="width:70%;">
-  <% form_tag @gateway.preferred_url do -%>
+  <%= form_tag @gateway.preferred_url do -%>
 
   <h3 class="heading"><%= t('ebsin_payment') %></h3>
 
@@ -37,4 +36,3 @@
 
 	<%= submit_tag t('ebsin_submit') %>
   <% end %>
-</fieldset>
