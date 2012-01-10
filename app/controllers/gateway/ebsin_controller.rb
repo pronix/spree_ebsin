@@ -42,7 +42,7 @@ class Gateway::EbsinController < Spree::BaseController
         (@data = ebsin_decode(params[:DR], @gateway.preferred_secret_key)) &&
         (@data["ResponseMessage"] == "Transaction Successful")
 
-      ebsin_payment_success(@data)
+      ebsin_payment_success(@data, @order.id)
       @order.next
       @order.save
       session[:order_id] = nil
@@ -66,7 +66,7 @@ class Gateway::EbsinController < Spree::BaseController
 
   # Completed payment process
   #
-  def ebsin_payment_success(data)
+  def ebsin_payment_success(data, oid)
     # record the payment
     
     fake_card = Ebsinfo.new({    :first_name          => @order.bill_address.firstname,
@@ -74,7 +74,7 @@ class Gateway::EbsinController < Spree::BaseController
                                  :TransactionId       => data["TransactionID"],
                                  :PaymentId           => data["PaymentID"] })
 
-    Payment.find_by_order_id(session[:order_id]).update_attributes(:source => fake_card, :payment_method_id => @gateway.id)
+    Payment.find_by_order_id(oid).update_attributes(:source => fake_card, :payment_method_id => @gateway.id)
 
   end
 
