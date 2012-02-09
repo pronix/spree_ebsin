@@ -44,7 +44,6 @@ class Gateway::EbsinController < Spree::BaseController
 
       ebsin_payment_success(@data, @order.id)
       @order.next
-      @order.payment_state = "paid"
       @order.save
       session[:order_id] = nil
       redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("payment_success")
