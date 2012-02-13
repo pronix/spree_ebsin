@@ -23,7 +23,7 @@ class RubyRc4
   private
 
   def process(text)
-    0.upto(text.length-1) {|i| text[i] = text[i] ^ round}
+    0.upto(text.length-1) {|i| text[i] = [text[i].ord ^round].pack('c')}
     text
   end
   
