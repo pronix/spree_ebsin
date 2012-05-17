@@ -75,11 +75,9 @@ class Gateway::EbsinController < Spree::BaseController
                                  :PaymentId           => data["PaymentID"] })
     ebs_info.save
 
-    # commented because this is potentially buggy code - 
-    # 1. uses session to get order instead of @order, 
-    # 2. An order can have many payments, which one to choose
-    # 3. Source should contain payment_source_clsas - Payment.rb:build_source
-    #Payment.find_by_order_id(session[:order_id]).update_attributes(:source => fake_card, :payment_method_id => @gateway.id)
+    ebs_payment_method = PaymentMethod.where(:type => "PaymentMethod::Ebsin").last
+    payment = @order.payments.where(:payment_method_id => ebs_payment_method.id).first
+    payment.update_attributes(:source => ebs_info)
 
   end
 
