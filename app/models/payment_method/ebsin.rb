@@ -1,4 +1,4 @@
-class PaymentMethod::Ebsin < PaymentMethod
+class PaymentMethod::Ebsin < Spree::PaymentMethod
 
   preference :account_id, :string
   preference :url,        :string, :default =>  "https://secure.ebs.in/pg/ma/sale/pay/"
