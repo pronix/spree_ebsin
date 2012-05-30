@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_ebsin'
-  s.version     = '1.0.0a'
+  s.version     = '1.1.1'
   s.summary     = 'Add gem summary here'
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
