@@ -1,3 +1,3 @@
-class SpreeEbsinHooks < Spree::ThemeSupport::HookListener
+#class SpreeEbsinHooks < Spree::ThemeSupport::HookListener
   # custom hooks go here
-end
+#end
