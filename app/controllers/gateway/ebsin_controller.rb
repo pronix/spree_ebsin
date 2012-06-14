@@ -1,4 +1,5 @@
 require 'base64'
+require 'digest/md5'
 class Gateway::EbsinController < Spree::BaseController
   include ERB::Util
   skip_before_filter :verify_authenticity_token, :only => [:comeback]
@@ -21,6 +22,7 @@ class Gateway::EbsinController < Spree::BaseController
     @order   = Order.find(params[:order_id])
     @gateway = @order.available_payment_methods.find{|x| x.id == params[:gateway_id].to_i }
     @order.payments.destroy_all
+    @hash = Digest::MD5.hexdigest(@gateway.preferred_secret_key+"|"+@gateway.preferred_account_id+"|"+@order.total.to_s+"|"+@order.number+"|"+[gateway_ebsin_comeback_url(@order),'DR={DR}'].join('?')+"|LIVE")
     payment = @order.payments.create!(:amount => 0,  :payment_method_id => @gateway.id)
 
     if @order.blank? || @gateway.blank?
