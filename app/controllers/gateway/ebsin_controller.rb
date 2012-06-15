@@ -22,7 +22,7 @@ class Gateway::EbsinController < Spree::BaseController
     @order   = Order.find(params[:order_id])
     @gateway = @order.available_payment_methods.find{|x| x.id == params[:gateway_id].to_i }
     @order.payments.destroy_all
-    @hash = Digest::MD5.hexdigest(@gateway.preferred_secret_key+"|"+@gateway.preferred_account_id+"|"+@order.total.to_s+"|"+@order.number+"|"+[gateway_ebsin_comeback_url(@order),'DR={DR}'].join('?')+"|LIVE")
+    @hash = Digest::MD5.hexdigest(@gateway.preferred_secret_key+"|"+@gateway.preferred_account_id+"|"+@order.total.to_s+"|"+@order.number+"|"+[gateway_ebsin_comeback_url(@order),'DR={DR}'].join('?')+"|"+@gateway.preferred_mode)
     payment = @order.payments.create!(:amount => 0,  :payment_method_id => @gateway.id)
 
     if @order.blank? || @gateway.blank?
