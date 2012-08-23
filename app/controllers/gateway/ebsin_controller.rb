@@ -43,9 +43,9 @@ class Gateway::EbsinController < Spree::BaseController
     if @gateway && @gateway.kind_of?(PaymentMethod::Ebsin) && params[:DR] &&
         (@data = ebsin_decode(params[:DR], @gateway.preferred_secret_key)) &&
         (@data["ResponseMessage"] == "Transaction Successful")
-
-      ebsin_payment_success(@data, @order.id)
       @order.next
+      #log the transaction
+      Ebsinfo.create(:first_name => @order.bill_address.firstname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
       session[:order_id] = nil
       redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("payment_success")
     else
@@ -63,20 +63,6 @@ class Gateway::EbsinController < Spree::BaseController
   def ebsin_decode(data, key)
     rc4 = RubyRc4.new(key)
     (Hash[ rc4.encrypt(Base64.decode64(data.gsub(/ /,'+'))).split('&').map { |x| x.split("=") } ]).slice(* NECESSARY )
-  end
-
-  # Completed payment process
-  #
-  def ebsin_payment_success(data, oid)
-    # record the payment
-    
-    fake_card = Ebsinfo.new({    :first_name          => @order.bill_address.firstname,
-                                 :last_name           => @order.bill_address.lastname,
-                                 :TransactionId       => data["TransactionID"],
-                                 :PaymentId           => data["PaymentID"] })
-
-    #Payment.find_by_order_id(oid).update_attributes(:source => fake_card, :payment_method_id => @gateway.id)
-
   end
 
 end
