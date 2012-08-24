@@ -39,11 +39,18 @@ class Gateway::EbsinController < Spree::BaseController
   def comeback
     @order   = Order.find_by_number(params[:id])
     @gateway = @order && @order.payments.first.payment_method
-
     if @gateway && @gateway.kind_of?(PaymentMethod::Ebsin) && params[:DR] &&
         (@data = ebsin_decode(params[:DR], @gateway.preferred_secret_key)) &&
         (@data["ResponseMessage"] == "Transaction Successful")
       @order.next
+      if @order.store_credit_id
+        credit_used = @order.store_credit_amount
+        credit = @order.store_credit
+        if credit
+          credit.remaining_amount -= credit_used
+          credit.save
+        end
+      end
       #log the transaction
       Ebsinfo.create(:first_name => @order.bill_address.firstname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
       session[:order_id] = nil
