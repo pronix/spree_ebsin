@@ -1,5 +1,7 @@
 class Ebsinfo < ActiveRecord::Base
+  has_many :payments, :as => :source
 
+  attr_accessible :first_name, :last_name, :TransactionId, :PaymentId
   def actions
     %w{mark_as_captured void}
   end

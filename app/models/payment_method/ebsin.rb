@@ -11,5 +11,9 @@ class PaymentMethod::Ebsin < Spree::PaymentMethod
   def payment_profiles_supported?
     false
   end
+  
+  def payment_source_class
+    Ebsinfo
+  end
 
 end
