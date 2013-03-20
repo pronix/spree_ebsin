@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
 
-   s.author            = 'someone' 
-  # s.email             = 'david@loudthinking.com'
+  s.author            = ['parallel588','aakashbapna']
+  s.email             = 'pronix.service@gmail.com'
   # s.homepage          = 'http://www.rubyonrails.org'
   # s.rubyforge_project = 'actionmailer'
 
