@@ -56,6 +56,7 @@ class Spree::Gateway::EbsinController < Spree::BaseController
       session[:order_id] = nil
       
       @order.finalize!
+      flash[:commerce_tracking] = "nothing special"
       redirect_to order_url(@order, {:checkout_complete => true, :token => @order.token}), :notice => I18n.t("payment_success")
     else
       ebs_error = @data["ResponseMessage"]      
