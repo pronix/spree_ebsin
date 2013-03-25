@@ -1,4 +1,4 @@
-CheckoutController.class_eval do
+Spree::CheckoutController.class_eval do
 
   before_filter :redirect_for_ebsin, :only => :update
 
