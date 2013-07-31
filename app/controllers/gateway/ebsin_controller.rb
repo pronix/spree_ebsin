@@ -19,7 +19,7 @@ class Gateway::EbsinController < Spree::BaseController
   # Show form EBS for pay
   #
   def show
-    @order   = Order.find(params[:order_id])
+    @order   = Spree::Order.find(params[:order_id])
     @gateway = @order.available_payment_methods.find{|x| x.id == params[:gateway_id].to_i }
     @order.payments.destroy_all
     @hash = Digest::MD5.hexdigest(@gateway.preferred_secret_key+"|"+@gateway.preferred_account_id+"|"+@order.total.to_s+"|"+@order.number+"|"+[gateway_ebsin_comeback_url(@order),'DR={DR}'].join('?')+"|"+@gateway.preferred_mode)
@@ -30,16 +30,16 @@ class Gateway::EbsinController < Spree::BaseController
       redirect_to :back
     else
       @bill_address, @ship_address =  @order.bill_address, (@order.ship_address || @order.bill_address)
-      render :action => :show
+      render :action => :show, :layout => false
     end
   end
 
   # Result from EBS
   #
   def comeback
-    @order   = Order.find_by_number(params[:id])
+    @order   = Spree::Order.find_by_number(params[:id])
     @gateway = @order && @order.payments.first.payment_method
-    if @gateway && @gateway.kind_of?(PaymentMethod::Ebsin) && params[:DR] &&
+    if @gateway && @gateway.kind_of?(Spree::PaymentMethod::Ebsin) && params[:DR] &&
         (@data = ebsin_decode(params[:DR], @gateway.preferred_secret_key)) &&
         (@data["ResponseMessage"] == "Transaction Successful")
       @order.next
@@ -52,7 +52,7 @@ class Gateway::EbsinController < Spree::BaseController
         end
       end
       #log the transaction
-      Ebsinfo.create(:first_name => @order.bill_address.firstname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
+      Spree::Ebsinfo.create(:first_name => @order.bill_address.firstname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
       session[:order_id] = nil
       redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("payment_success")
     else

@@ -1,5 +1,5 @@
 <fieldset id='payment' style="width:70%;">
-  <% form_tag @gateway.preferred_url do -%>
+  <%= form_tag @gateway.preferred_url do -%>
 
   <h3 class="heading"><%= t("confirm") %> your order</h3>
 
@@ -36,7 +36,7 @@
   <%= hidden_field_tag 'ship_postal_code', @ship_address.zipcode %>
   <%= hidden_field_tag 'ship_state',      (@ship_address.state.try(:name) || @ship_address.state_name) %>
   <div class="form-buttons savebutton_properties" style="margin-top:15px;">
-	<%= submit_tag t('ebsin_submit'), :style => 'background:transparent;border:0px;color:#ffffff;text-transform:uppercase;' %>
+	<%= submit_tag t('ebsin_submit') %>
   </div>
   <% end %>
 </fieldset>
