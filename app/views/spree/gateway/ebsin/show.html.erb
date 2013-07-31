@@ -6,7 +6,7 @@
   <fieldset id="order_details" style='padding-left:0px;'>
     <div class="clear"></div>
     <p style='text-transform:uppercase;font-weight:bold; margin:0px 0px 10px 0px;'>ORDER NO. <%= @order.number %> (<a href="/checkout/payment" style="font-size: 12px; font-weight:normal;">&larr; Back to payment options</a>)</p>
-    <%= render :partial => 'shared/order_details', :locals => {:order => @order} -%>
+    <%= render :partial => 'spree/shared/order_details', :locals => {:order => @order} -%>
   </fieldset>
 
   <hr />
