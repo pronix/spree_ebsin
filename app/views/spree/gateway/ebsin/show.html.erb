@@ -12,15 +12,15 @@
   <hr />
   <p class="tenpx"><%= t('ebsin_instuctional_text') %></p>
   <%= hidden_field_tag 'account_id',      @gateway.preferred_account_id %>
-	<%= hidden_field_tag 'reference_no',    @order.number %>
-	<%= hidden_field_tag 'amount',          @order.total.to_s %>
+  <%= hidden_field_tag 'reference_no',    @order.number %>
+  <%= hidden_field_tag 'amount',          @order.total.to_s %>
   <%= hidden_field_tag 'return_url',      [gateway_ebsin_comeback_url(@order),'DR={DR}'].join('?')  %>
   <%= hidden_field_tag 'secure_hash',     @hash %>
-	<%= hidden_field_tag 'name',            @bill_address.firstname %>
-	<%= hidden_field_tag 'address',         @bill_address.address1 %>
-	<%= hidden_field_tag 'city',            @bill_address.city %>
-	<%= hidden_field_tag 'postal_code',     @bill_address.zipcode %>
-	<%= hidden_field_tag 'country',         @bill_address.country.iso3 %>
+  <%= hidden_field_tag 'name',            @bill_address.firstname %>
+  <%= hidden_field_tag 'address',         @bill_address.address1 %>
+  <%= hidden_field_tag 'city',            @bill_address.city %>
+  <%= hidden_field_tag 'postal_code',     @bill_address.zipcode %>
+  <%= hidden_field_tag 'country',         @bill_address.country.iso3 %>
   <%= hidden_field_tag 'description',     "#{Spree::Config[:site_name]} Order: #{@order.number}" %>
   <%= hidden_field_tag 'email',           (@order.email || @order.user.try(:email))  %>
 
@@ -36,7 +36,7 @@
   <%= hidden_field_tag 'ship_postal_code', @ship_address.zipcode %>
   <%= hidden_field_tag 'ship_state',      (@ship_address.state.try(:name) || @ship_address.state_name) %>
   <div class="form-buttons savebutton_properties" style="margin-top:15px;">
-	<%= submit_tag t('ebsin_submit') %>
+  <%= submit_tag t('ebsin_submit') %>
   </div>
   <% end %>
 </fieldset>

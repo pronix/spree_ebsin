@@ -6,7 +6,7 @@ en:
   account_id: Account Id
   secret_key: Secret Key
   ebsin_payment: Pay by credit card
-  ebsin_pay_instructions: "Pay now using EBS (you'll now be redirected to EBS secure server)"
+  ebsin_pay_instructions: "Pay now using Credit Card/Debit Card/Net Banking (you'll now be redirected to EBS secure server)"
   ebsin_instuctional_text: "Click the payment button below to have your payment processed by our secure servers."
   url: URL
   redirect_success: Success Redirect URL
@@ -18,4 +18,5 @@ en:
   pay_now: "Pay Now"
   ebsin_payment_failure: "Something went wrong. Please try again."
   ebsin_payment_success: "Your payment has been accepted."
+  ebsin_payment_response_error: "There was an error creating your order."
 
