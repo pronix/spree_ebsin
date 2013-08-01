@@ -53,6 +53,7 @@ class Spree::Gateway::EbsinController < Spree::BaseController
 
       ebsin_payment_success(@data)
       
+      @order.reload
       @order.next
       
       session[:order_id] = nil
