@@ -8,7 +8,7 @@ module Spree
     helper 'spree/products'
 
     respond_to :html
-    
+
     include ERB::Util
     skip_before_filter :verify_authenticity_token, :only => [:comeback]
 
@@ -50,19 +50,18 @@ module Spree
       if @gateway && @gateway.kind_of?(Spree::PaymentMethod::Ebsin) && params[:DR] &&
           (@data = ebsin_decode(params[:DR], @gateway.preferred_secret_key)) &&
           (@data["ResponseMessage"] == "Transaction Successful")
-        @order.next
-        if @order.store_credit_id
-          credit_used = @order.store_credit_amount
-          credit = @order.store_credit
-          if credit
-            credit.remaining_amount -= credit_used
-            credit.save
-          end
+        payment = @order.payments.find_or_create_by_payment_method_id(@gateway.id)
+        unless payment.nil?
+          #log the transaction
+          source = Spree::Ebsinfo.create(:first_name => @order.bill_address.firstname, :last_name => @order.bill_address.lastname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
+          payment.source = source
+          payment.state = 'completed'
+          payment.amount ||= source.amount
+          payment.save
+          @order.next
+          session[:order_id] = nil
+          redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("payment_success")
         end
-        #log the transaction
-        Spree::Ebsinfo.create(:first_name => @order.bill_address.firstname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
-        session[:order_id] = nil
-        redirect_to order_url(@order, {:checkout_complete => true, :order_token => @order.token}), :notice => I18n.t("payment_success")
       else
         flash[:error] = I18n.t("ebsin_payment_response_error")
         redirect_to (@order.blank? ? root_url : edit_order_url(@order))
