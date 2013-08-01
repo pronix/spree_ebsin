@@ -52,7 +52,7 @@ class Spree::Gateway::EbsinController < Spree::BaseController
 
       ebsin_payment_success(@data)
       
-      @order.update_attributes({:state => "complete", :completed_at => Time.now}, :without_protection => true)
+      @order.next
       
       session[:order_id] = nil
       
