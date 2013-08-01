@@ -82,7 +82,7 @@ class Spree::Gateway::EbsinController < Spree::BaseController
     # record the payment
     source = Spree::Ebsinfo.create(:first_name => @order.bill_address.firstname, :last_name => @order.bill_address.lastname, :TransactionId => @data["TransactionID"], :PaymentId => @data["PaymentID"], :amount => @data["Amount"], :order_id => @order.id)
 
-    ebs_payment_method = Spree::PaymentMethod.where(:type => "PaymentMethod::Ebsin").last
+    ebs_payment_method = Spree::PaymentMethod.where(:type => "Spree::PaymentMethod::Ebsin").last
     payment = @order.payments.where(:payment_method_id => ebs_payment_method.id).first
     payment.source = source
     payment.save
