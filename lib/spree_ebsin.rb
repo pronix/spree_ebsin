@@ -14,7 +14,7 @@ module SpreeEbsin
     initializer "spree.register.payment_methods" do |app|
       app.config.spree.payment_methods += [Spree::PaymentMethod::Ebsin]
     end
-    
+
     config.to_prepare &method(:activate).to_proc
   end
 end

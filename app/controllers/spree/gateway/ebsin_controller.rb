@@ -49,7 +49,7 @@ module Spree
     def comeback
       @order   = current_order #Spree::Order.find_by_id(params[:id])
       @gateway = @order && @order.payments.first.payment_method
-      #@gateway && @gateway.kind_of?(PaymentMethod::Ebsin) && params[:DR] 
+      #@gateway && @gateway.kind_of?(PaymentMethod::Ebsin) && params[:DR]
       @data = ebsin_decode(params[:DR], @gateway.preferred_secret_key)
       if  (@data) &&
           (@data["ResponseMessage"] == "Transaction Successful") &&
@@ -58,16 +58,16 @@ module Spree
           (@data["Amount"].to_f == @order.outstanding_balance.to_f)
 
         ebsin_payment_success(@data)
-        
+
         @order.reload
         @order.next
-        
+
         session[:order_id] = nil
-        
+
         @order.finalize!
         redirect_to order_url(@order, {:checkout_complete => true, :token => @order.token}), :notice => I18n.t("payment_success")
       else
-        ebs_error = @data["ResponseMessage"]      
+        ebs_error = @data["ResponseMessage"]
         flash[:error] = I18n.t("ebsin_payment_response_error")+" Payment: "+ebs_error
         redirect_to (@order.blank? ? root_url : edit_order_url(@order, {:token => @order.token}))
       end
