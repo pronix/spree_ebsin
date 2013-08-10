@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Add gem summary here'
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
-  s.author            = ['Dmitry Vasilets','Damir Sharipov','Maxim Pechnikov']
+  s.author            = ['Dmitry Vasilets','Damir Sharipov','Maxim Pechnikov','me@aakash.me']
   s.email             = ['parallel588@gmail.com','pronix.service@gmail.com','dammer2k@gmail.com']
   s.homepage          = 'http://vasilec.blogspot.de/'
 
